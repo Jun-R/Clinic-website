@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+:root {
+  --mint-50: #ecfdf5;
+  --mint-200: #a7f3d0;
+  --mint-400: #34d399;
+  --mint-600: #10b981; /* primary */
+  --pink-400: #fb7185; /* accent */
+  --pink-500: #f43f5e;
+  --surface: #ffffff;
+  --text: #0f172a; /* slate-900 */
+  --surface-dark: #2b2d31; /* discord-like grey */
+  --text-dark: #e5e7eb; /* gray-200 */
+}
+
+/* Dark mode variable swap */
+.dark {
+  --surface: var(--surface-dark);
+  --text: var(--text-dark);
+}
+
+/* Utility: diagonal hover rounding (two opposite corners) */
+.diag-hover {
+  border-radius: 0; /* square by default */
+  transition: border-radius 200ms ease, transform 200ms ease;
+}
+.diag-hover:hover {
+  border-top-left-radius: 1rem; /* tl */
+  border-bottom-right-radius: 1rem; /* br */
+}
+
+/* Scrolling banner */
+@keyframes scrollX {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.scrolling-banner {
+  display: flex;
+  width: max-content;
+  animation: scrollX 38s linear infinite;
+}
+
+/* Subtle card surface */
+.card {
+  background: color-mix(in oklab, var(--surface) 94%, transparent);
+  border: 1px solid color-mix(in oklab, var(--text) 10%, transparent);
+  border-radius: 1.25rem; /* 2xl */
+  box-shadow: 0 8px 24px 0 rgb(0 0 0 / 0.08);
+}
