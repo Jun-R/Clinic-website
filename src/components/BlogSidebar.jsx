@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import ScrollReveal from "./ScrollReveal.jsx";
 import { Pencil, Trash2, Plus } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const LS_KEY = "clinic_blog_posts_v1";
 const AUTH_KEY = "clinic_owner_auth";
@@ -101,7 +102,7 @@ export default function BlogSidebar() {
   return (
     <ScrollReveal dir="left">
       <div className="card p-5 space-y-4">
-        <h3 className="text-lg font-semibold">블로그</h3>
+        <h3 className="text-lg font-semibold">최근 글</h3>
 
         {/* Composer (owner only) */}
         {isOwner ? (
@@ -154,7 +155,8 @@ export default function BlogSidebar() {
             </div>
           )}
 
-          {sorted.map((p) => (
+          {/*Show only 4 posts*/}
+          {sorted.slice(0,4).map((p) => (
             <article key={p.id} className="py-3">
               <div className="flex items-start justify-between gap-2">
                 <h4 className="font-semibold leading-tight">{p.title}</h4>
@@ -187,6 +189,16 @@ export default function BlogSidebar() {
               </p>
             </article>
           ))}
+          {sorted.length > 4 ? (
+            <div className="pt-2 text-center">
+              <Link
+                to="/blog"
+                className="diag-hover inline-flex items-center justify-center rounded-none px-4 py-2 text-sm font-semibold border border-black/10 dark:border-white/10"
+              >
+                더 보기
+              </Link>
+            </div>
+          ) : null}
         </div>
       </div>
     </ScrollReveal>

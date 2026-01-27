@@ -6,7 +6,6 @@ export default function About() {
     <section id="about" className="pt-10 sm:pt-14">
       <ScrollReveal>
         <div className="card p-6 sm:p-10">
-          {/* min-w-0 prevents overflow from children at larger breakpoints */}
           <div className="grid items-center gap-8 md:grid-cols-2 min-w-0">
             <div className="space-y-4 min-w-0">
               <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">

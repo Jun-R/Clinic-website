@@ -5,7 +5,7 @@ import { samples } from "../lib/sampleData.js";
 
 export default function Banner() {
 const items = [...samples.gallery, ...samples.ads];
-// Duplicate for seamless loop
+//Seamless loop
 const loop = [...items, ...items];
 
 
