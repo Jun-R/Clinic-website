@@ -48,25 +48,25 @@ export default function Header() {
             href="#about"
             className="px-3 py-2 text-sm opacity-80 hover:opacity-100"
           >
-            About
+            소개
           </a>
           <a
             href="#gallery"
             className="px-3 py-2 text-sm opacity-80 hover:opacity-100"
           >
-            Gallery
+            갤러리
           </a>
           <a
             href="#location"
             className="px-3 py-2 text-sm opacity-80 hover:opacity-100"
           >
-            Visit
+            오시는 길
           </a>
           <a
             href="#blog"
             className="px-3 py-2 text-sm opacity-80 hover:opacity-100"
           >
-            Blog
+            블로그
           </a>
         </nav>
 
