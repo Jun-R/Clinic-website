@@ -21,22 +21,27 @@ export default function App(){
               lg:grid-cols-[minmax(0,1fr)_360px]
             "
           >
-            {/* ABOUT*/}
-            <section className="min-w-0">
-              <About />
-            </section>
+            {/* LEFT COLUMN: Stack About and Gallery here */}
+            <div className="flex flex-col gap-8 lg:gap-10 min-w-0">
+              
+              {/* ABOUT */}
+              <section className="min-w-0">
+                <About />
+              </section>
 
-            {/* BLOG*/}
-            <aside id="blog" className="min-w-0 lg:col-start-2 lg:row-auto pt-10 sm:pt-14">
+              {/* GALLERY (Moved here so sidebar can flow past it) */}
+              <section className="min-w-0">
+                <Banner />
+              </section>
+
+            </div>
+
+            {/* RIGHT COLUMN: Sidebar (Extends naturally alongside About + Gallery) */}
+            <aside id="blog" className="min-w-0 pt-10 sm:pt-14">
               <BlogSidebar />
             </aside>
 
-            {/* GALLERY*/}
-            <section className="min-w-0 lg:col-span-2">
-              <Banner />
-            </section>
-
-            {/* VISIT US*/}
+            {/* VISIT US (Full Width at bottom) */}
             <section className="min-w-0 lg:col-span-2">
               <LocationHours />
             </section>

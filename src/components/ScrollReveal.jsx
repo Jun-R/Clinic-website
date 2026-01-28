@@ -9,16 +9,16 @@ const controls = useAnimation();
 
 
 useEffect(() => {
-controls.start(inView ? "visible" : "hidden");
-}, [inView, controls]);
+    controls.start(inView ? "visible" : "hidden");
+    }, [inView, controls]);
 
 
 const offset = 24;
 const directions = {
-up: { y: offset, x: 0 },
-down: { y: -offset, x: 0 },
-left: { x: offset, y: 0 },
-right: { x: -offset, y: 0 },
+    up: { y: offset, x: 0 },
+    down: { y: -offset, x: 0 },
+    left: { x: offset, y: 0 },
+    right: { x: -offset, y: 0 },
 };
 
 

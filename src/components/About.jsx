@@ -17,10 +17,12 @@ export default function About() {
               </p>
               <div className="flex gap-3 pt-2">
                 <a
-                  href="#blog"
+                  href="https://map.naver.com/p/entry/place/1225820706?lng=127.1145353&lat=37.5051720&placePath=%2Fbooking%3FbookingRedirectUrl%3Dhttps%3A%2F%2Fm.booking.naver.com%2Fbooking%2F13%2Fbizes%2F1053453%3Ftheme%3Dplace%26entry%3Dpll%26lang%3Dko%26entry%3Dpll&area=pll&c=15.00,0,0,0,dh"
+                  target = "_blank"
+                  rel = "noopener noreferrer"
                   className="diag-hover inline-flex items-center justify-center rounded-none px-5 py-2.5 text-sm font-semibold text-white bg-[color:var(--mint-600)] hover:brightness-110"
                 >
-                  블로그
+                  예약하기
                 </a>
                 <a
                   href="#gallery"

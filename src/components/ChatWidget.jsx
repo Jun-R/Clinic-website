@@ -60,7 +60,7 @@ export default function ChatWidget() {
         >
           <span className="inline-flex items-center gap-2">
             <MessageCircle size={16} />
-            상담하기
+            미톡스 GPT와 상담하기
           </span>
         </button>
       )}

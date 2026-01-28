@@ -66,7 +66,7 @@ export default function Header() {
             href="#blog"
             className="px-3 py-2 text-sm opacity-80 hover:opacity-100"
           >
-            블로그
+            이벤트
           </a>
         </nav>
 
