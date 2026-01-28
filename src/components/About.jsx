@@ -33,7 +33,7 @@ export default function About() {
             </div>
 
             <div className="relative min-w-0">
-              {/* glow backdrop */}
+              {/* Glow backdrop */}
               <div className="absolute -inset-3 -z-10 rounded-2xl bg-[color:var(--mint-200)]/50 blur-xl" />
 
               {/* aspect-ratio lock + clipped corners */}
