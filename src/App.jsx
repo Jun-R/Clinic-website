@@ -7,12 +7,14 @@ import LocationHours from "./components/LocationHours.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatWidget from "./components/ChatWidget.jsx";
 
-export default function App(){
+export default function App() {
   return (
     <div className="min-h-screen flex flex-col">
-    <Header />
+      <Header />
 
-      <main className="w-full pb-24">
+      <main className="w-full">
+        
+        {/* --- SECTION 1: Top Content --- */}
         <div className="w-full px-4 sm:px-6 lg:px-8">
           <div
             className="
@@ -21,32 +23,26 @@ export default function App(){
               lg:grid-cols-[minmax(0,1fr)_360px]
             "
           >
-            {/* LEFT COLUMN: Stack About and Gallery here */}
-            <div className="flex flex-col gap-8 lg:gap-10 min-w-0">
-              
-              {/* ABOUT */}
-              <section className="min-w-0">
-                <About />
-              </section>
-
-              {/* GALLERY (Moved here so sidebar can flow past it) */}
-              <section className="min-w-0">
-                <Banner />
-              </section>
-
+            <div className="min-w-0">
+              <About />
             </div>
-
-            {/* RIGHT COLUMN: Sidebar (Extends naturally alongside About + Gallery) */}
             <aside id="blog" className="min-w-0 pt-10 sm:pt-14">
               <BlogSidebar />
             </aside>
-
-            {/* VISIT US (Full Width at bottom) */}
-            <section className="min-w-0 lg:col-span-2">
-              <LocationHours />
-            </section>
           </div>
         </div>
+
+        {/* --- SECTION 2: Banner --- */}
+        {/* CHANGED: px-8 -> px-4 sm:px-6 lg:px-8 to match the other containers */}
+        <section className="w-full px-4 sm:px-6 lg:px-8 mt-12 lg:mt-12">
+          <Banner />
+        </section>
+
+        {/* --- SECTION 3: Bottom Content --- */}
+        <div className="w-full px-4 sm:px-6 lg:px-8 mt-12 lg:mt-12">
+          <LocationHours />
+        </div>
+
       </main>
       <Footer />
       <ChatWidget />

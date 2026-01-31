@@ -27,7 +27,7 @@ export default function LocationHours() {
                 <dl className="grid grid-cols-[auto,1fr] items-baseline gap-x-3 gap-y-1.5">
                   <dt>
                     <span className="inline-block px-1.5 py-0.5 rounded bg-pink-200/70 dark:bg-pink-300/30 font-semibold">
-                      진료 시간
+                      화요일 · 수요일 · 토요일 · 일요일 · 공휴일
                     </span>
                   </dt>
                   <dd>오전 10시 – 오후 5시</dd>
@@ -39,19 +39,13 @@ export default function LocationHours() {
                   </dt>
                   <dd>오후 7시까지 (야간 진료)</dd>
 
-                  <dt>
+                  <dt>  
                     <span className="inline-block px-1.5 py-0.5 rounded bg-pink-200/70 dark:bg-pink-300/30 font-semibold">
                       목요일
                     </span>
                   </dt>
                   <dd>휴무</dd>
 
-                  <dt>
-                    <span className="inline-block px-1.5 py-0.5 rounded bg-pink-200/70 dark:bg-pink-300/30 font-semibold">
-                      일요일 · 공휴일
-                    </span>
-                  </dt>
-                  <dd>진료</dd>
                 </dl>
               </div>
 

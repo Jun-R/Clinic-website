@@ -37,7 +37,7 @@
 .scrolling-banner {
   display: flex;
   width: max-content;
-  animation: scrollX 38s linear infinite;
+  animation: scrollX 50s linear infinite;
 }
 
 /* Subtle card surface */
