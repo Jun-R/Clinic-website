@@ -50,23 +50,33 @@ export default function Header() {
           >
             소개
           </a>
+
+          <a
+            href="#blog"
+            className="px-3 py-2 text-sm opacity-80 hover:opacity-100"
+          >
+            이벤트
+          </a>
+
+          <a
+            href="#reviews"
+            className="px-3 py-2 text-sm opacity-80 hover:opacity-100"
+          >
+            미톡스 후기
+          </a>
+
           <a
             href="#gallery"
             className="px-3 py-2 text-sm opacity-80 hover:opacity-100"
           >
             갤러리
           </a>
+
           <a
             href="#location"
             className="px-3 py-2 text-sm opacity-80 hover:opacity-100"
           >
             오시는 길
-          </a>
-          <a
-            href="#blog"
-            className="px-3 py-2 text-sm opacity-80 hover:opacity-100"
-          >
-            이벤트
           </a>
         </nav>
 

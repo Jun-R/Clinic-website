@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "./components/Header.jsx";
 import About from "./components/About.jsx";
+import Review from "./components/Review.jsx";
 import Banner from "./components/Banner.jsx";
 import BlogSidebar from "./components/BlogSidebar.jsx";
 import LocationHours from "./components/LocationHours.jsx";
@@ -30,6 +31,10 @@ export default function App() {
               <BlogSidebar />
             </aside>
           </div>
+        </div>
+
+        <div className = "w-full px-4 sm: px-6 lg:px-8 mt-12 lg:mt-12">
+          <Review />
         </div>
 
         {/* --- SECTION 2: Banner --- */}
