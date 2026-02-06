@@ -1,11 +1,24 @@
-import React from "react";
+import React, {useState, useEffect } from "react";
 import ScrollReveal from "./ScrollReveal.jsx";
-import { data } from "../lib/Data.js";
+import { supabase } from "../lib/Data.js";
 
 export default function Review() {
-  // We repeat the data 3 times to ensure the loop is long enough to be seamless
-  // (Reviews are often fewer than gallery images, so we need more items to fill the width)
-  const loop = [...data.reviews, ...data.reviews, ...data.reviews];
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {getreviews();}, []);
+  async function getreviews() {
+    const { data, error } = await supabase
+    .from("reviews")
+    .select('*')
+    .order('id', {ascending: true});
+    if (error) {
+      console.error("Error getting reviews: ", error);
+    } else {
+      setReviews(data || []);
+    }
+  }
+
+  const loop = [...reviews, ...reviews, ...reviews];
 
   return (
     <section id="reviews" className="scroll-mt-20">
@@ -19,10 +32,6 @@ export default function Review() {
             {/* Moving Container: Uses the same 'scrolling-banner' class */}
             <div className="scrolling-banner gap-4 pr-4 flex">
               {loop.map((review, index) => (
-                /* CARD ITEM:
-                   - flex-shrink-0: Prevents the card from being squished
-                   - w-[300px]: Fixed width is required for the scrolling to look even
-                */
                 <article 
                   key={index} 
                   className="
@@ -34,10 +43,10 @@ export default function Review() {
                   "
                 >
                   {/* Image Section */}
-                  {review.image ? (
+                  {review.picture_url ? (
                     <div className="aspect-[4/3] w-full overflow-hidden rounded-xl border border-black/5 bg-white">
                       <img
-                        src={review.image}
+                        src={review.picture_url}
                         alt={`${review.author} review`}
                         className="w-full h-full object-cover"
                       />

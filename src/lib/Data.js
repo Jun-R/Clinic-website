@@ -1,63 +1,6 @@
-export const data = {
-    gallery: [
-    "/img/hesed in office.jpg",
-    "/img/내부1.jpg",
-    "/img/내부2.jpg",
-    "/img/내부3.jpg",
-    "/img/내부핑크1.jpg",
-    "/img/좌측입구.jpg",
-    "img/일요일피부과.jpg",
-    "img/클스방석.jpg",
-    "img/cutebearmask.jpg",
-    "img/cutebearsethoscope.jpg",
-    "img/개나리.jpg",
-    "img/winter.jpg"
-    ],
+import { createClient } from '@supabase/supabase-js'
 
+const supabaseUrl = 'https://awicwbolytrwodzqwacp.supabase.co'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF3aWN3Ym9seXRyd29kenF3YWNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzMzc0MjgsImV4cCI6MjA4NTkxMzQyOH0.G1HsqvaBsU35y4GFAqKSuAmgNq7f5QedfDPqZtxnyYI'
 
-    reviews: [
-        {
-            id: 1,
-            author: "고르고르찌유",
-            date: "2026.01.31",
-            content: "여기 다닌지는 2년정도 된거같네요^^ 가격도 착하고 설명도 친절하고 시술을 과하게 권하지 않아서 좋은곳입니다 강추",
-            image: "img/reviewimg/Jan31.jpg" 
-        },
-        {
-            id: 2,
-            author: "hancat430",
-            date: "2026.01.31",
-            content: "원장님 친철하시고 보톡스 효과 오래가요",
-            image: "img/info.jpg"
-        },
-        {
-            id: 3,
-            author: "레이첼 혹은 데이지",
-            date: "2026.01.31",
-            content: "지난번 방문후 만족도가 높아 보톡스 다시 맞을 시긴에 맞춰 재방문. 원장선생님의 꼼꼼함과 친절. 간호사샘들도 꼼꼼히 봐주시고 친절하고, 병원 내부도 넘 깔끔하고 조용하고 한산하고 차분히 빠르게 진행되어 너무 좋아요. 편히 관리받으시고픈 분들에게 추천드립니다.",
-            image: "img/reviewimg/Jan31내부.jpg"
-        },
-        {
-            id: 4,
-            author: "조조8285",
-            date: "2026.01.30",
-            content: "이번에 헤어라인 제모도 하고 1년만에 턱보톡스 받았고 집가는 버스 타서 리뷰 남겨요🐈‍⬛🎶 원래 이마 제모로 왔는데 일단 원장님이 정말 꼼꼼하고 세심하시고 친절하셔서 너무 좋았어요 기술이 엄청나십니다 제 얼굴형에 맞춰서 디자인을 정말 공들여 잡아주시는 게 느껴졌고 제가 디자이너라 정말 예민한데 예쁘게 만들어주세요 정말 효과를 잊지 못해요 이직면접 잡혀있는데 용감하게 맞아봅니다 반차나 연차 쓰고 올 가치가 충분한 곳입니다 제대로 된 시술받고 싶은 분들께 진심 추천드려요 제가 제주도에 살아도 와서 한번씩 받을 것 같아요ㅜㅜ 시술 내내 친절하게 설명해 주셔서 감사했어요🥹 제가 어마어마한 쫄보인데간호사님이랑 실장님도 너무 잘 대해주셔서 그런지 긴장도 덜 되고 다른 곳에 비해 통증도 거의 없더라고요 요술 롤러인가",
-            image: "img/reviewimg/Jan30lamp.jpg" 
-        },
-        {
-            id: 5,
-            author: "bobhj",
-            date: "2026.01.30",
-            content: "들어가서 바로 상담받고 시술했는데 데스크및 상담직원분도 친절하시고, 원장선생님께서도 자세히 설명잘해주셨습니다. 계속 이용할것 같아요",
-            image: "img/info.jpg"
-        },
-        {
-            id: 6,
-            author: "이서진18",
-            date: "2026.01.23",
-            content: "두번째 방문이에요 이마 미간은 늘 맞는데 여기 원장님만 제 근육 크기랑 비대칭 알아보시고 양쪽 양 조절해서 달리 해주셨어요 미간에 근육이 옆으로?? 암튼 좀 특이 했능데 여기서 처음으로 크기가 줄었어요 그래서 다시 왔어요 앞으로 미간 이마는 여기로 다닐듯해요",
-            image: "/img/reviewimg/Jan23.jpg"
-        }
-        
-    ]
-};
+export const supabase = createClient(supabaseUrl, supabaseKey)
