@@ -11,7 +11,7 @@ export default function Banner() {
     
     async function getGallery() {
         const { data, error } = await supabase
-            .from('gallery') // Must match the table name we created in SQL
+            .from('gallery') // Must match the table name that was created in SQL
             .select('*')
             .order('id', { ascending: true });
     
