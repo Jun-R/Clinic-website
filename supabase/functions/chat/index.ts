@@ -2,8 +2,8 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { GoogleGenerativeAI } from "npm:@google/generative-ai"
 
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  //'Access-Control-Allow-Origin': 'https://mitox.net',
+  //'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Origin': 'https://mitox.net',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 const rateLimitMap = new Map<string, number[]>();
