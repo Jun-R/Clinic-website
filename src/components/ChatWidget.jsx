@@ -45,7 +45,7 @@ export default function ChatWidget() {
         try {
           const response = await fetch("https://awicwbolytrwodzqwacp.supabase.co/functions/v1/chat", {
             method: "POST",
-            headers: { "Content-Type": "application/json",  },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ message: text })
           });
 
