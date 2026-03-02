@@ -10,22 +10,21 @@ const rateLimitMap = new Map<string, number[]>();
 const RATE_LIMIT_WINDOW_MS = 60000;
 const MAX_REQUESTS_PER_WINDOW = 15;
 serve(async (req) => {
-  // 1. Handle CORS Preflight Requests (Required for React)
+  //  Handle CORS Preflight Requests (Required for React)
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
   }
 
   try {
-    // 2. Parse the incoming message from your React widget
-    const { message } = await req.json()
+    // Parse the incoming message from your React widget
+    const { history } = await req.json()
     
-    // 3. Securely grab the Gemini API key from Supabase Secrets
+    // Securely grab the Gemini API key from Supabase Secrets
     const apiKey = Deno.env.get('GEMINI_API_KEY')
     if (!apiKey) throw new Error("API Key missing")
 
     const genAI = new GoogleGenerativeAI(apiKey)
-    
-    // 4. Initialize the model with the Clinic's rules
+    //  Initialize the model with the Clinic's rules
     const model = genAI.getGenerativeModel({
       model: "gemini-2.5-flash",
       systemInstruction: `
@@ -147,15 +146,30 @@ serve(async (req) => {
       원장이름: 노남규
       위치, 오시는길: 서울 송파구 가락로 183 2층 9호 (상가 좌측 전용계단 이용)
       넓은 주차
-      텍스트 강조할때 '**' 쓰지 않기
+      텍스트 강조할때 ** 쓰지 않기
       `
     })
 
-    // 5. Ask Gemini and get the text response
-    const result = await model.generateContent(message)
+    //strip the bot message
+    const cleanHistory = history[0].role === 'bot' ? history.slice(1) : history;
+
+    //format history to array
+    const formattedHistory = cleanHistory.map((msg: any) => ({
+      role: msg.role === 'bot' ? 'model' : 'user',
+      parts: [{text: msg.content}]
+    }));
+
+    //Extract last message to send as the new prompt
+    const latestMessage = formattedHistory.pop();
+    const chat = model.startChat({
+      history: formattedHistory,
+    });
+
+    // send whole history to Gemini and get response
+    const result = await chat.sendMessage(latestMessage.parts[0].text);
     const reply = result.response.text()
 
-    // 6. Send the reply back to the React app
+    // Send the reply back to the React app
     return new Response(
       JSON.stringify({ reply }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

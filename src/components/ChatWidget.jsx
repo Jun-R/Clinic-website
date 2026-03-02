@@ -39,14 +39,15 @@ export default function ChatWidget() {
 
     try {
       let data = null;
-
+      const chatHistory = [...messages, { role: "user", content: text }];
       // The Silent Retry Loop
       for (let attempt = 0; attempt <= maxRetries; attempt++) {
         try {
+          //Store chat history
           const response = await fetch("https://awicwbolytrwodzqwacp.supabase.co/functions/v1/chat", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message: text })
+            body: JSON.stringify({ history: chatHistory })
           });
 
           // 1. Check for Rate Limit (Spam)
@@ -71,7 +72,7 @@ export default function ChatWidget() {
           
           // If we used up all our retries, throw a network error to the outer catch
           if (attempt === maxRetries) {
-            throw new Error("네트워크가 불안정해요");
+            throw new Error("네트워크가 불안정해요 :(");
           }
           
           // Otherwise, wait 1.5 seconds and loop again
