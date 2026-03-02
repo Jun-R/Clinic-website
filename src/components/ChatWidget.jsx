@@ -86,7 +86,8 @@ export default function ChatWidget() {
     } catch (error) {
       console.error("Chat error:", error);
       
-      setMessages((m) => [...m, { role: "bot", content: errorMessage }]);
+      setMessages((m) => [...m, { role: "bot", content: error.message }]);
+      
     } finally {
       setIsLoading(false);
     }
