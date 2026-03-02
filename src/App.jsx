@@ -50,7 +50,7 @@ export default function App() {
 
       </main>
       <Footer />
-      <ChatWidget />
+      {/* <ChatWidget /> */}
     </div>
   );
 }
