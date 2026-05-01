@@ -38,6 +38,10 @@
   display: flex;
   width: max-content;
   animation: scrollX 50s linear infinite;
+  animation-play-state: running;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 }
 
 /* Subtle card surface */
