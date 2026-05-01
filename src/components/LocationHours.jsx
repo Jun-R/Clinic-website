@@ -28,8 +28,9 @@ export default function LocationHours() {
 
                   <dt>
                     <span className="inline-block px-2 py-1 rounded-md bg-rose-200 text-rose-950 dark:bg-rose-500/25 dark:text-rose-50 text-base sm:text-lg font-bold">
-                      5월 4일 - 5월 12일 진료 휴무
+                      5월 4일 - 5월 12일 진료 휴무 <br /> 5월 14일(목) 정상진료
                     </span>
+                    
                   </dt>
                   <dt>
                     <span className="inline-block px-1.5 py-0.5 rounded bg-pink-200/70 dark:bg-pink-300/30 font-semibold">
