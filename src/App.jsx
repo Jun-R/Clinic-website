@@ -21,7 +21,7 @@ export default function App() {
             className="
               grid items-start gap-8 lg:gap-10
               grid-cols-1
-              lg:grid-cols-[minmax(0,1fr)_360px]
+              lg:grid-cols-[minmax(0,1fr)_420px]
             "
           >
             <div className="min-w-0">

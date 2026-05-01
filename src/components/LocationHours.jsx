@@ -25,6 +25,12 @@ export default function LocationHours() {
               <div className="flex items-start gap-3 text-sm">
                 <Clock3 className="mt-0.5 shrink-0" size={18} />
                 <dl className="grid grid-cols-[auto,1fr] items-baseline gap-x-3 gap-y-1.5">
+
+                  <dt>
+                    <span className="inline-block px-2 py-1 rounded-md bg-rose-200 text-rose-950 dark:bg-rose-500/25 dark:text-rose-50 text-base sm:text-lg font-bold">
+                      5월 4일 - 5월 12일 진료 휴무
+                    </span>
+                  </dt>
                   <dt>
                     <span className="inline-block px-1.5 py-0.5 rounded bg-pink-200/70 dark:bg-pink-300/30 font-semibold">
                       화요일 · 수요일 · 토요일 · 일요일 · 공휴일
