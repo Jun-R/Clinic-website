@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import ScrollReveal from "./ScrollReveal.jsx";
 import { Calendar, ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -9,20 +9,89 @@ const EVENTS_DATA = [
     //date: "2024. 12. 01 ~ 2025. 02. 28",
     description: "자가혈을 활용한 재생 시술로 자연스럽고 조화로운 변화를 경험해보세요",
     imageUrls: [
-      "/img/줄기메타셀.png",      
-      "/img/MCT.png",      
+      "/img/줄기메타셀.png",
+      "/img/MCT.png",
       "/img/타임라인.png",
       "/img/프리미엄하이브리드.png",
       "/img/전신항산화.png",
       "/img/피부집중.png",
     ],
+    videoUrl: "/img/26서머미톡스.mp4",
   },
 ];
 
-function EventImageCarousel({ images, title }) {
-  const scrollerRef = useRef(null);
+const mediaClass =
+  "h-64 sm:h-80 lg:h-[28rem] w-auto max-w-none shrink-0 snap-start rounded-xl border border-black/5 dark:border-white/5 bg-black/5 object-contain select-none";
 
-  if (!images?.length) return null;
+function InViewVideo({ src, className, title }) {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const forceSilent = () => {
+      video.muted = true;
+      video.defaultMuted = true;
+      video.volume = 0;
+    };
+
+    forceSilent();
+
+    const onVolumeChange = () => forceSilent();
+    const onPlay = () => forceSilent();
+
+    video.addEventListener("volumechange", onVolumeChange);
+    video.addEventListener("play", onPlay);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          forceSilent();
+          const playPromise = video.play();
+          if (playPromise?.catch) playPromise.catch(() => {});
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.4 }
+    );
+
+    observer.observe(video);
+    return () => {
+      observer.disconnect();
+      video.removeEventListener("volumechange", onVolumeChange);
+      video.removeEventListener("play", onPlay);
+    };
+  }, [src]);
+
+  return (
+    <video
+      ref={videoRef}
+      data-event-card
+      src={src}
+      className={className}
+      muted
+      defaultMuted
+      playsInline
+      loop
+      controls
+      controlsList="novolume noaudio"
+      disablePictureInPicture
+      preload="metadata"
+      aria-label={title ? `${title} 영상` : "이벤트 영상"}
+    />
+  );
+}
+
+function EventImageCarousel({ images, videoUrl, title }) {
+  const scrollerRef = useRef(null);
+  const items = [
+    ...(videoUrl ? [{ type: "video", src: videoUrl }] : []),
+    ...images.map((src) => ({ type: "image", src })),
+  ];
+
+  if (!items.length) return null;
 
   function scrollByDir(dir) {
     const el = scrollerRef.current;
@@ -35,7 +104,7 @@ function EventImageCarousel({ images, title }) {
   const navBtnClass =
     "shrink-0 self-center rounded-full border border-black/10 bg-black/[0.04] p-1.5 text-black/55 shadow-sm transition hover:bg-black/[0.08] hover:text-black dark:border-white/15 dark:bg-white/[0.06] dark:text-white/65 dark:hover:bg-white/[0.12] dark:hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--pink-600)] disabled:opacity-30";
 
-  const showArrows = images.length > 1;
+  const showArrows = items.length > 1;
 
   return (
     <div className="flex items-center gap-1.5 sm:gap-2">
@@ -54,20 +123,29 @@ function EventImageCarousel({ images, title }) {
         ref={scrollerRef}
         className="flex min-w-0 flex-1 gap-3 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-none"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-        aria-label={`${title} 이미지`}
+        aria-label={`${title} 미디어`}
       >
-        {images.map((src, i) => (
-          <img
-            key={`${src}-${i}`}
-            data-event-card
-            src={src}
-            alt={`${title} — ${i + 1}번째 이미지`}
-            draggable={false}
-            loading={i === 0 ? "eager" : "lazy"}
-            decoding="async"
-            className="h-64 sm:h-80 lg:h-[28rem] w-auto max-w-none shrink-0 snap-start rounded-xl border border-black/5 dark:border-white/5 bg-black/5 object-contain select-none"
-          />
-        ))}
+        {items.map((item, i) =>
+          item.type === "video" ? (
+            <InViewVideo
+              key={`video-${item.src}`}
+              src={item.src}
+              title={title}
+              className={mediaClass}
+            />
+          ) : (
+            <img
+              key={`${item.src}-${i}`}
+              data-event-card
+              src={item.src}
+              alt={`${title} — ${i + 1}번째 이미지`}
+              draggable={false}
+              loading={i === 0 ? "eager" : "lazy"}
+              decoding="async"
+              className={mediaClass}
+            />
+          )
+        )}
       </div>
 
       {showArrows && (
@@ -100,7 +178,11 @@ export default function BlogSidebar() {
             const images = event.imageUrls ?? (event.imageUrl ? [event.imageUrl] : []);
             return (
               <article key={event.id} className="flex flex-col gap-3">
-                <EventImageCarousel images={images} title={event.title} />
+                <EventImageCarousel
+                  images={images}
+                  videoUrl={event.videoUrl}
+                  title={event.title}
+                />
 
                 <div className="max-w-2xl">
                   <h4 className="font-semibold leading-tight text-[color:var(--pink-600)]">
