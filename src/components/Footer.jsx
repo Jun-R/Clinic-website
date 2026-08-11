@@ -8,7 +8,6 @@ export default function Footer() {
     <div className="opacity-70">© {new Date().getFullYear()} 미톡스 외과의원 </div>
     <div className="flex items-center gap-3">
     <a href="#about" className="opacity-80 hover:opacity-100">소개</a>
-    <a href="#gallery" className="opacity-80 hover:opacity-100">갤러리</a>
     <a href="#location" className="opacity-80 hover:opacity-100">오시는 길</a>
     </div>
     </div>

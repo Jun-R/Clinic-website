@@ -14,40 +14,29 @@ export default function App() {
       <Header />
 
       <main className="w-full">
-        
-        {/* --- SECTION 1: Top Content --- */}
-        <div className="w-full px-4 sm:px-6 lg:px-8">
-          <div
-            className="
-              grid items-start gap-8 lg:gap-10
-              grid-cols-1
-              lg:grid-cols-[minmax(0,1fr)_420px]
-            "
-          >
-            <div className="min-w-0">
-              <About />
-            </div>
-            <aside id="blog" className="min-w-0 pt-10 sm:pt-14">
-              <BlogSidebar />
-            </aside>
-          </div>
-        </div>
-
-        <div className = "w-full px-4 sm: px-6 lg:px-8 mt-12 lg:mt-12">
-          <Review />
-        </div>
-
-        {/* --- SECTION 2: Banner --- */}
-        {/* CHANGED: px-8 -> px-4 sm:px-6 lg:px-8 to match the other containers */}
-        <section className="w-full px-4 sm:px-6 lg:px-8 mt-12 lg:mt-12">
+        {/* --- SECTION 1: Gallery --- */}
+        <section className="w-full">
           <Banner />
         </section>
 
-        {/* --- SECTION 3: Bottom Content --- */}
+        {/* --- SECTION 2: About --- */}
+        <div className="w-full px-4 sm:px-6 lg:px-8">
+          <About />
+        </div>
+
+        {/* --- SECTION 3: Events --- */}
+        <div id="blog" className="w-full px-4 sm:px-6 lg:px-8 mt-12">
+          <BlogSidebar />
+        </div>
+
+        <div className="w-full px-4 sm:px-6 lg:px-8 mt-12 lg:mt-12">
+          <Review />
+        </div>
+
+        {/* --- SECTION 4: Bottom Content --- */}
         <div className="w-full px-4 sm:px-6 lg:px-8 mt-12 lg:mt-12">
           <LocationHours />
         </div>
-
       </main>
       <Footer />
       {/* <ChatWidget /> */}

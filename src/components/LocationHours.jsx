@@ -26,21 +26,21 @@ export default function LocationHours() {
                 <Clock3 className="mt-0.5 shrink-0" size={18} />
                 <dl className="grid grid-cols-[auto,1fr] items-baseline gap-x-3 gap-y-1.5">
                   <dt>
-                    <span className="inline-block px-1.5 py-0.5 rounded bg-pink-200/70 dark:bg-pink-300/30 font-semibold">
+                    <span className="inline-block px-1.5 py-0.5 rounded bg-[color:var(--pink-highlight)]/70 dark:bg-[color:var(--pink-highlight)]/30 font-semibold">
                       화요일 · 수요일 · 토요일 · 일요일 · 공휴일
                     </span>
                   </dt>
                   <dd>오전 10시 – 오후 5시</dd>
 
                   <dt>
-                    <span className="inline-block px-1.5 py-0.5 rounded bg-pink-200/70 dark:bg-pink-300/30 font-semibold">
+                    <span className="inline-block px-1.5 py-0.5 rounded bg-[color:var(--pink-highlight)]/70 dark:bg-[color:var(--pink-highlight)]/30 font-semibold">
                       월요일 · 금요일
                     </span>
                   </dt>
                   <dd>오후 7시까지 (야간 진료)</dd>
 
                   <dt>  
-                    <span className="inline-block px-1.5 py-0.5 rounded bg-pink-200/70 dark:bg-pink-300/30 font-semibold">
+                    <span className="inline-block px-1.5 py-0.5 rounded bg-[color:var(--pink-highlight)]/70 dark:bg-[color:var(--pink-highlight)]/30 font-semibold">
                       목요일
                     </span>
                   </dt>

@@ -1,12 +1,17 @@
 @import "tailwindcss";
 
+@theme {
+  --font-tenor: "Tenor Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
 :root {
-  --mint-50: #ecfdf5;
-  --mint-200: #a7f3d0;
-  --mint-400: #34d399;
-  --mint-600: #10b981; /* primary */
-  --pink-400: #fb7185; /* accent */
-  --pink-500: #f43f5e;
+  /* Brand highlight — same soft pink as event titles (e.g. 싱그러운 봄을 담은 화사함) */
+  --pink-highlight: #FFB7C5;
+  --pink-50: #fff5f7;
+  --pink-200: #ffd6df;
+  --pink-400: #ffc4d0;
+  --pink-500: var(--pink-highlight);
+  --pink-600: var(--pink-highlight);
   --surface: #ffffff;
   --text: #0f172a; /* slate-900 */
   --surface-dark: #2b2d31; /* discord-like grey */
@@ -37,11 +42,16 @@
 .scrolling-banner {
   display: flex;
   width: max-content;
-  animation: scrollX 50s linear infinite;
+  animation: scrollX 100s linear infinite;
   animation-play-state: running;
   will-change: transform;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
+}
+
+/* Hide native scrollbar for Instagram-style gallery */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
 }
 
 /* Subtle card surface */

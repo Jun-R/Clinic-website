@@ -101,7 +101,7 @@ export default function ChatWidget() {
         <button
           onClick={() => setOpen(true)}
           aria-label="Open chat"
-          className="diag-hover fixed bottom-4 right-4 z-[100] rounded-none px-4 py-3 text-sm font-semibold text-white bg-[color:var(--mint-600)] shadow-lg"
+          className="diag-hover fixed bottom-4 right-4 z-[100] rounded-none px-4 py-3 text-sm font-semibold text-slate-900 bg-[color:var(--pink-600)] shadow-lg"
         >
           <span className="inline-flex items-center gap-2">
             <MessageCircle size={16} />
@@ -150,14 +150,14 @@ export default function ChatWidget() {
                       className={
                         "max-w-[75%] rounded-xl px-3 py-2 text-sm whitespace-pre-wrap " +
                         (isUser
-                          ? "bg-[color:var(--mint-200)]/60"
+                          ? "bg-[color:var(--pink-200)]/60"
                           : "bg-black/5 dark:bg-white/10")
                       }
                     >
                       {m.content}
                     </div>
                     {isUser && (
-                      <div className="mt-1 shrink-0 h-6 w-6 rounded-full bg-[color:var(--mint-600)]/90 text-white grid place-items-center">
+                      <div className="mt-1 shrink-0 h-6 w-6 rounded-full bg-[color:var(--pink-600)]/90 text-white grid place-items-center">
                         <User size={14} />
                       </div>
                     )}
