@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 // Optional: { src, position } — position is a Tailwind object-* class (e.g. object-[center_35%]).
 const galleryImages = [
   { src: "/img/내부핑크1.jpg", position: "object-[center_50%]" },
+  { src: "/img/줄기메타셀LONG.png", position: "object-[47%_50%]" },
+  "img/타임라인LONG.png",
   "/img/내부2.jpg",
   { src: "/img/cutebearmask.jpg", position: "object-[center_40%]" },
   { src: "/img/내부1.jpg", position: "object-[center_60%]" },
@@ -13,6 +15,8 @@ const galleryImages = [
   { src: "/img/내부램프.jpg", position: "object-[center_55%]" },
   { src: "/img/좌측입구.jpg", position: "object-[center_30%]" },
   { src: "/img/클스방석.jpg", position: "object-[center_60%]" },
+
+
 ];
 
 export default function Banner() {
