@@ -167,8 +167,7 @@ export default function BlogSidebar() {
     <ScrollReveal dir="up">
       <div className="card p-5 sm:p-6 space-y-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold flex items-center gap-2">
-            <Calendar size={20} className="opacity-70" />
+          <h3 className="text-xl font-semibold flex items-center gap-2">
             이벤트 & 소식
           </h3>
         </div>

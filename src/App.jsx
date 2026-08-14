@@ -6,7 +6,6 @@ import Banner from "./components/Banner.jsx";
 import BlogSidebar from "./components/BlogSidebar.jsx";
 import LocationHours from "./components/LocationHours.jsx";
 import Footer from "./components/Footer.jsx";
-import ChatWidget from "./components/ChatWidget.jsx";
 
 export default function App() {
   return (
@@ -39,7 +38,6 @@ export default function App() {
         </div>
       </main>
       <Footer />
-      {/* <ChatWidget /> */}
     </div>
   );
 }

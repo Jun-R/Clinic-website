@@ -27,7 +27,9 @@
 /* Utility: diagonal hover rounding (two opposite corners) */
 .diag-hover {
   border-radius: 0; /* square by default */
-  transition: border-radius 200ms ease, transform 200ms ease;
+  overflow: hidden;
+  isolation: isolate;
+  transition: border-radius 200ms ease, transform 200ms ease, background-color 200ms ease;
 }
 .diag-hover:hover {
   border-top-left-radius: 1rem; /* tl */
