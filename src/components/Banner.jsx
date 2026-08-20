@@ -10,12 +10,10 @@ const galleryImages = [
   "/img/내부2.jpg",
   { src: "/img/cutebearmask.jpg", position: "object-[center_40%]" },
   { src: "/img/내부1.jpg", position: "object-[center_60%]" },
-  { src: "/img/내부3.jpg", position: "object-[center_30%]" },
   { src: "/img/cutebearsethoscope.jpg", position: "object-[center_10%]" },
   { src: "/img/내부램프.jpg", position: "object-[center_55%]" },
   { src: "/img/좌측입구.jpg", position: "object-[center_30%]" },
   { src: "/img/클스방석.jpg", position: "object-[center_60%]" },
-
 
 ];
 

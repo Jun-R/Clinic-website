@@ -44,7 +44,7 @@
 .scrolling-banner {
   display: flex;
   width: max-content;
-  animation: scrollX 100s linear infinite;
+  animation: scrollX 130s linear infinite;
   animation-play-state: running;
   will-change: transform;
   transform: translate3d(0, 0, 0);
