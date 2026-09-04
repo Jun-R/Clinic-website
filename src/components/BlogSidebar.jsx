@@ -16,7 +16,7 @@ const EVENTS_DATA = [
       "/img/전신항산화.png",
       "/img/피부집중.png",
     ],
-    videoUrl: "/img/26서머미톡스.mp4",
+    videoUrl: "/img/26F미톡스.mp4",
   },
 ];
 
