@@ -53,8 +53,8 @@ export default function LocationHours() {
               {/* Phone */}
               <div className="flex items-start gap-3 text-sm">
                 <Phone className="mt-0.5" size={18} />
-                <a href="tel:0507-1333-6631" className="underline-offset-2 hover:underline">
-                0507-1333-6631
+                <a href="tel:02-425-6631" className="underline-offset-2 hover:underline">
+                02 425 6631
                 </a>
               </div>
             </div>
