@@ -322,15 +322,17 @@ export default function SiteMascot() {
       >
         <button
           type="button"
-          className="relative flex h-full w-full cursor-pointer items-end justify-center border-0 bg-transparent p-0"
+          className="relative flex h-full w-full cursor-pointer items-end justify-center border-0 bg-transparent p-0 select-none"
+          style={{ WebkitTouchCallout: "none", WebkitUserSelect: "none", userSelect: "none" }}
           aria-label="mascot"
           onPointerEnter={onPointerEnter}
           onPointerLeave={onPointerLeave}
           onClick={onClick}
+          onContextMenu={(e) => e.preventDefault()}
         >
           {bubble && (
             <div
-              className="absolute bottom-[calc(100%+8px-1rem)] left-1/2 z-10 w-max max-w-[240px] -translate-x-1/2 rounded-2xl border border-[color:var(--pink-200)] bg-[color:var(--surface)] px-4 py-2.5 text-center text-sm leading-snug text-[color:var(--text)] shadow-md sm:text-base"
+              className="pointer-events-none absolute bottom-[calc(100%+8px-1rem)] left-1/2 z-10 w-max max-w-[240px] -translate-x-1/2 rounded-2xl border border-[color:var(--pink-200)] bg-[color:var(--surface)] px-4 py-2.5 text-center text-sm leading-snug text-[color:var(--text)] shadow-md sm:text-base"
               role="status"
             >
               {bubble}
@@ -345,11 +347,15 @@ export default function SiteMascot() {
             src={src}
             alt=""
             draggable={false}
-            className="object-contain"
+            className="pointer-events-none object-contain select-none"
+            onContextMenu={(e) => e.preventDefault()}
             style={{
               width: imgSize,
               height: imgSize,
               transform: `translateY(${idleNudge}px) scaleX(${flipX})`,
+              WebkitTouchCallout: "none",
+              WebkitUserSelect: "none",
+              userSelect: "none",
             }}
           />
         </button>
