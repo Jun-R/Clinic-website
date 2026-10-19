@@ -6,152 +6,66 @@ const IDLE_SRC = "/img/chickIDLE.gif";
 
 const LINES = ["갤러리 한번 보세요!", "후기도 꼼꼼히!"];
 
-const SIZE = 144; // walk display size
-const IDLE_SIZE = 72;
-// Idle art sits lower in-frame than walk — lift to roughly match feet
-const IDLE_Y_NUDGE = -((SIZE - IDLE_SIZE) / 2) * 1.0;
+const WALK_SIZE_DESKTOP = 144;
+const IDLE_SIZE_DESKTOP = 72;
+const MOBILE_SCALE = 0.75;
+const MOBILE_MQ = "(max-width: 639px)";
 const SPEED_PX_PER_SEC = 55;
 const IDLE_DWELL_MS_MIN = 3000;
 const IDLE_DWELL_MS_MAX = 5000;
-
-// Interactive UI the mascot must not cover (viewport space)
-const AVOID_SELECTORS = [
-  "header",
-  'iframe[title="clinic-map"]',
-  "a.diag-hover",
-  'button:not([aria-label="mascot"])',
-];
-const AVOID_PAD = 16;
 
 function prefersReducedMotion() {
   if (typeof window === "undefined") return false;
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
+function getMascotSizes(mobile) {
+  const scale = mobile ? MOBILE_SCALE : 1;
+  const walk = WALK_SIZE_DESKTOP * scale;
+  const idle = IDLE_SIZE_DESKTOP * scale;
+  return {
+    walk,
+    idle,
+    // Idle art sits lower in-frame than walk — lift to roughly match feet
+    nudge: -((walk - idle) / 2) * 1.0,
+  };
+}
+
 function randomInRange(min, max) {
   return min + Math.random() * (max - min);
 }
 
-function getBounds() {
+function getBounds(walkSize) {
   const pad = 8;
   const w = window.innerWidth;
   const h = window.innerHeight;
   return {
     minX: pad,
-    maxX: Math.max(pad, w - SIZE - pad),
+    maxX: Math.max(pad, w - walkSize - pad),
     minY: Math.max(pad, h * 0.62),
-    maxY: Math.max(pad, h - SIZE - pad),
+    maxY: Math.max(pad, h - walkSize - pad),
   };
 }
 
-function getAvoidRects() {
-  const rects = [];
-  for (const sel of AVOID_SELECTORS) {
-    document.querySelectorAll(sel).forEach((el) => {
-      const r = el.getBoundingClientRect();
-      if (r.width < 2 || r.height < 2) return;
-      if (r.bottom < 0 || r.top > window.innerHeight || r.right < 0 || r.left > window.innerWidth) {
-        return;
-      }
-      rects.push({
-        left: r.left - AVOID_PAD,
-        top: r.top - AVOID_PAD,
-        right: r.right + AVOID_PAD,
-        bottom: r.bottom + AVOID_PAD,
-      });
-    });
-  }
-  return rects;
-}
-
-function overlapsAvoid(x, y, rects) {
-  const left = x;
-  const top = y;
-  const right = x + SIZE;
-  const bottom = y + SIZE;
-  return rects.some(
-    (r) => left < r.right && right > r.left && top < r.bottom && bottom > r.top
-  );
-}
-
-function pathHitsAvoid(from, to, rects) {
-  const steps = 10;
-  for (let i = 0; i <= steps; i++) {
-    const t = i / steps;
-    const x = from.x + (to.x - from.x) * t;
-    const y = from.y + (to.y - from.y) * t;
-    if (overlapsAvoid(x, y, rects)) return true;
-  }
-  return false;
-}
-
-function clampToBounds(x, y) {
-  const b = getBounds();
+function clampPos(x, y, walkSize) {
+  const b = getBounds(walkSize);
   return {
     x: Math.min(b.maxX, Math.max(b.minX, x)),
     y: Math.min(b.maxY, Math.max(b.minY, y)),
   };
 }
 
-/** Push a point out of avoid rects within roam bounds (best-effort). */
-function findSafePos(x, y, rects) {
-  let pos = clampToBounds(x, y);
-  if (!overlapsAvoid(pos.x, pos.y, rects)) return pos;
-
-  const b = getBounds();
-  const candidates = [
-    { x: b.minX, y: b.maxY },
-    { x: b.maxX, y: b.maxY },
-    { x: b.minX, y: b.minY },
-    { x: b.maxX, y: b.minY },
-    { x: (b.minX + b.maxX) / 2, y: b.maxY },
-    { x: b.minX, y: (b.minY + b.maxY) / 2 },
-    { x: b.maxX, y: (b.minY + b.maxY) / 2 },
-  ];
-  for (const c of candidates) {
-    if (!overlapsAvoid(c.x, c.y, rects)) return c;
+function randomTarget(fromX, walkSize) {
+  const b = getBounds(walkSize);
+  let x = randomInRange(b.minX, b.maxX);
+  if (Math.abs(x - fromX) < 80) {
+    x =
+      fromX < (b.minX + b.maxX) / 2
+        ? randomInRange((b.minX + b.maxX) / 2, b.maxX)
+        : randomInRange(b.minX, (b.minX + b.maxX) / 2);
   }
-
-  // Last resort: sample the roam band
-  for (let i = 0; i < 30; i++) {
-    const sample = {
-      x: randomInRange(b.minX, b.maxX),
-      y: randomInRange(b.minY, b.maxY),
-    };
-    if (!overlapsAvoid(sample.x, sample.y, rects)) return sample;
-  }
-  return pos;
-}
-
-function clampPos(x, y) {
-  return findSafePos(x, y, getAvoidRects());
-}
-
-function randomTarget(from) {
-  const b = getBounds();
-  const rects = getAvoidRects();
-  const fromPos = typeof from === "number" ? { x: from, y: posFallbackY(b) } : from;
-
-  for (let attempt = 0; attempt < 48; attempt++) {
-    let x = randomInRange(b.minX, b.maxX);
-    if (Math.abs(x - fromPos.x) < 80) {
-      x =
-        fromPos.x < (b.minX + b.maxX) / 2
-          ? randomInRange((b.minX + b.maxX) / 2, b.maxX)
-          : randomInRange(b.minX, (b.minX + b.maxX) / 2);
-    }
-    const y = randomInRange(b.minY, b.maxY);
-    const to = { x, y };
-    if (overlapsAvoid(to.x, to.y, rects)) continue;
-    if (pathHitsAvoid(fromPos, to, rects)) continue;
-    return to;
-  }
-
-  return findSafePos(fromPos.x, fromPos.y, rects);
-}
-
-function posFallbackY(b) {
-  return (b.minY + b.maxY) / 2;
+  const y = randomInRange(b.minY, b.maxY);
+  return { x, y };
 }
 
 export default function SiteMascot() {
@@ -160,6 +74,9 @@ export default function SiteMascot() {
   const [mode, setMode] = useState("walking");
   const [facingLeft, setFacingLeft] = useState(false);
   const [bubble, setBubble] = useState(null);
+  const [sizes, setSizes] = useState(() =>
+    getMascotSizes(typeof window !== "undefined" && window.matchMedia(MOBILE_MQ).matches)
+  );
 
   const posRef = useRef({ x: 24, y: 0 });
   const modeRef = useRef("walking");
@@ -170,6 +87,7 @@ export default function SiteMascot() {
   const idleDwellActiveRef = useRef(false);
   const roamGenRef = useRef(0);
   const reducedRef = useRef(false);
+  const walkSizeRef = useRef(WALK_SIZE_DESKTOP);
 
   const setModeSafe = useCallback((next) => {
     modeRef.current = next;
@@ -225,7 +143,7 @@ export default function SiteMascot() {
       if (!visibleRef.current || hoveringRef.current) break;
       if (modeRef.current === "talking" || modeRef.current === "paused") break;
 
-      const target = randomTarget(posRef.current);
+      const target = randomTarget(posRef.current.x, walkSizeRef.current);
       await walkTo(target, gen);
       if (gen !== roamGenRef.current) break;
     }
@@ -278,15 +196,30 @@ export default function SiteMascot() {
     });
   }, []);
 
+  // Mobile: both GIFs at 0.75×
+  useEffect(() => {
+    const mq = window.matchMedia(MOBILE_MQ);
+    const apply = () => {
+      const next = getMascotSizes(mq.matches);
+      walkSizeRef.current = next.walk;
+      setSizes(next);
+      const clamped = clampPos(posRef.current.x, posRef.current.y, next.walk);
+      posRef.current = clamped;
+      controls.set({ x: clamped.x, y: clamped.y });
+    };
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, [controls]);
+
   useEffect(() => {
     reducedRef.current = prefersReducedMotion();
 
-    const b = getBounds();
-    const start = findSafePos(
-      randomInRange(b.minX, b.maxX),
-      randomInRange(b.minY, b.maxY),
-      getAvoidRects()
-    );
+    const b = getBounds(walkSizeRef.current);
+    const start = {
+      x: randomInRange(b.minX, b.maxX),
+      y: randomInRange(b.minY, b.maxY),
+    };
     posRef.current = start;
     controls.set({ x: start.x, y: start.y });
 
@@ -326,59 +259,14 @@ export default function SiteMascot() {
   }, [clearIdleTimer, pauseRoam, resumeWalking, setModeSafe]);
 
   useEffect(() => {
-    const relocateIfBlocked = () => {
-      const rects = getAvoidRects();
-      const cur = posRef.current;
-      if (!overlapsAvoid(cur.x, cur.y, rects)) return;
-
-      const next = findSafePos(cur.x, cur.y, rects);
-      posRef.current = next;
-      controls.set({ x: next.x, y: next.y });
-
-      // Abort current leg and pick a new safe path
-      if (
-        modeRef.current === "walking" &&
-        !idleDwellActiveRef.current &&
-        !hoveringRef.current &&
-        visibleRef.current &&
-        !reducedRef.current
-      ) {
-        roamGenRef.current += 1;
-        controls.stop();
-        queueMicrotask(() => {
-          if (
-            modeRef.current === "walking" &&
-            !idleDwellActiveRef.current &&
-            !hoveringRef.current
-          ) {
-            startRoam();
-          }
-        });
-      }
-    };
-
-    let scrollRaf = 0;
-    const onScroll = () => {
-      if (scrollRaf) return;
-      scrollRaf = requestAnimationFrame(() => {
-        scrollRaf = 0;
-        relocateIfBlocked();
-      });
-    };
     const onResize = () => {
-      const next = clampPos(posRef.current.x, posRef.current.y);
+      const next = clampPos(posRef.current.x, posRef.current.y, walkSizeRef.current);
       posRef.current = next;
       controls.set({ x: next.x, y: next.y });
     };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onResize);
-      if (scrollRaf) cancelAnimationFrame(scrollRaf);
-    };
-  }, [controls, startRoam]);
+    return () => window.removeEventListener("resize", onResize);
+  }, [controls]);
 
   const onPointerEnter = () => {
     if (reducedRef.current || !visibleRef.current) return;
@@ -416,13 +304,14 @@ export default function SiteMascot() {
   const showIdle = mode === "paused" || mode === "talking" || reducedRef.current;
   const src = showIdle ? IDLE_SRC : WALK_SRC;
   const flipX = facingLeft ? 1 : -1;
-  const idleNudge = showIdle ? IDLE_Y_NUDGE : 0;
+  const idleNudge = showIdle ? sizes.nudge : 0;
+  const imgSize = showIdle ? sizes.idle : sizes.walk;
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[60]" aria-hidden={false}>
       <motion.div
         className="pointer-events-auto absolute left-0 top-0 touch-manipulation select-none"
-        style={{ width: SIZE, height: SIZE }}
+        style={{ width: sizes.walk, height: sizes.walk }}
         animate={controls}
         initial={false}
         onUpdate={(latest) => {
@@ -458,8 +347,8 @@ export default function SiteMascot() {
             draggable={false}
             className="object-contain"
             style={{
-              width: showIdle ? IDLE_SIZE : SIZE,
-              height: showIdle ? IDLE_SIZE : SIZE,
+              width: imgSize,
+              height: imgSize,
               transform: `translateY(${idleNudge}px) scaleX(${flipX})`,
             }}
           />
