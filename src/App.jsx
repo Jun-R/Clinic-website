@@ -6,6 +6,7 @@ import Banner from "./components/Banner.jsx";
 import BlogSidebar from "./components/BlogSidebar.jsx";
 import LocationHours from "./components/LocationHours.jsx";
 import Footer from "./components/Footer.jsx";
+import SiteMascot from "./components/SiteMascot.jsx";
 
 export default function App() {
   return (
@@ -38,6 +39,7 @@ export default function App() {
         </div>
       </main>
       <Footer />
+      <SiteMascot />
     </div>
   );
 }
