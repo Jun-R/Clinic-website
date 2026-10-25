@@ -12,7 +12,7 @@ const MOBILE_SCALE = 0.75;
 const MOBILE_MQ = "(max-width: 639px)";
 const SPEED_PX_PER_SEC = 55;
 const IDLE_DWELL_MS_MIN = 3000;
-const IDLE_DWELL_MS_MAX = 5000;
+const IDLE_DWELL_MS_MAX = 4000;
 
 function prefersReducedMotion() {
   if (typeof window === "undefined") return false;
